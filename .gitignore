@@ -1,0 +1,30 @@
+# Entornos virtuales y bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+
+# Archivos temporales de LaTeX
+*.aux
+*.log
+*.out
+*.toc
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+
+# Archivos de texto auxiliares / scratch
+*.txt
+
+# Archivos pesados / PDFs de referencia local
+*.pdf
+
+# Configuración de editores
+.vscode/
+.idea/
+
+# Archivos de trabajo en la raíz (la versión versionada está en 'actividad 1/')
+/ejercicio_*.py
+/actividad1_*.tex
+

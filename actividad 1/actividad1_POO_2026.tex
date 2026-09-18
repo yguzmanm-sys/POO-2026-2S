@@ -1,0 +1,416 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{tikz}
+\usetikzlibrary{positioning, arrows.meta, shapes.geometric}
+\usepackage{amsmath}
+\usepackage{float}
+
+\geometry{left=2.5cm, right=2.5cm, top=3cm, bottom=3cm}
+
+\definecolor{codeblue}{rgb}{0.0, 0.35, 0.65}
+\definecolor{codegreen}{rgb}{0.0, 0.5, 0.2}
+\definecolor{codegray}{rgb}{0.5, 0.5, 0.5}
+\definecolor{codepurple}{rgb}{0.52, 0.0, 0.52}
+\definecolor{backcolour}{rgb}{0.97, 0.97, 0.97}
+
+\lstdefinestyle{pythonstyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen}\itshape,
+    keywordstyle=\color{codeblue}\bfseries,
+    stringstyle=\color{codepurple},
+    numberstyle=\tiny\color{codegray},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=4,
+    language=Python,
+    frame=single,
+    rulecolor=\color{codeblue},
+    morekeywords={True, False, None, self}
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\small POO 2026-2S -- Actividad 1}
+\lhead{\small Universidad}
+\cfoot{\thepage}
+
+\titleformat{\section}[block]{\large\bfseries\color{codeblue}}{}{0em}{}[\titlerule]
+\titleformat{\subsection}[block]{\normalsize\bfseries}{}{0em}{}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=codeblue,
+    urlcolor=codeblue,
+    pdftitle={Actividad 1 - POO 2026-2S},
+    pdfauthor={Estudiante}
+}
+
+\begin{document}
+
+\begin{titlepage}
+    \centering
+    \vspace*{1.5cm}
+
+    {\LARGE \textbf{Universidad}}\\[0.4cm]
+    {\large Facultad de Ingenier\'ia}\\[0.2cm]
+    {\large Programa de Ingenier\'ia de Sistemas}\\[2cm]
+
+    \rule{\linewidth}{1.5pt}\\[0.4cm]
+    {\huge \textbf{Actividad 1}}\\[0.3cm]
+    {\Large Programaci\'on Orientada a Objetos}\\[0.3cm]
+    \rule{\linewidth}{1.5pt}\\[2cm]
+
+    \begin{tabular}{rl}
+        \textbf{Asignatura:}  & Programaci\'on Orientada a Objetos \\[0.3cm]
+        \textbf{C\'odigo:}    & 2026-2S \\[0.3cm]
+        \textbf{Actividad:}   & Actividad 1 -- Individual (10\%) \\[0.3cm]
+        \textbf{Estudiante:}  & [Nombre completo del estudiante] \\[0.3cm]
+        \textbf{Docente:}     & Walter Hugo Arboleda Mazo \\[0.3cm]
+        \textbf{Fecha:}       & 17 de septiembre de 2026 \\[0.3cm]
+    \end{tabular}
+
+    \vfill
+
+    {\large \textbf{Referencia:}}\\[0.3cm]
+    Libro de L\'ogica de Programaci\'on de Efra\'in Oviedo.
+
+    \vspace{1cm}
+    \textbf{Repositorio GitHub:}\\
+    \url{https://github.com/yguzmanm-sys/POO-2026-2S}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+% ===============================================================
+\section{Ejercicio Resuelto No~4}
+
+\subsection{Enunciado}
+A la mam\'a de Juan le preguntan su edad, y contesta: tengo 3 hijos, preg\'untele a Juan su edad. Alberto tiene 2/3 de la edad de Juan, Ana tiene 4/3 de la edad de Juan y mi edad es la suma de las tres. Hacer un algoritmo que muestre la edad de los cuatro.
+
+\subsection{C\'odigo fuente -- \texttt{ejercicio\_resuelto4\_edades.py}}
+
+\begin{lstlisting}[style=pythonstyle, caption={Familia de Juan -- ejercicio\_resuelto4\_edades.py}]
+class FamiliaJuan:
+    def __init__(self, edad_juan: float):
+        self.edad_juan = edad_juan
+
+    def calcular_edades(self):
+        alberto = (2 / 3) * self.edad_juan
+        ana = (4 / 3) * self.edad_juan
+        mama = self.edad_juan + alberto + ana
+        return self.edad_juan, alberto, ana, mama
+
+    def imprimir_edades(self):
+        juan, alberto, ana, mama = self.calcular_edades()
+        print(f"Edad de Juan: {juan:.0f}")
+        print(f"Edad de Alberto: {alberto:.0f}")
+        print(f"Edad de Ana: {ana:.0f}")
+        print(f"Edad de la mama: {mama:.0f}")
+
+if __name__ == "__main__":
+    familia = FamiliaJuan(9)
+    familia.imprimir_edades()
+\end{lstlisting}
+
+\subsection{Diagrama de clases}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    class/.style={draw=codeblue, fill=backcolour, thick, minimum width=6cm, text centered, font=\ttfamily\small},
+    section/.style={draw=codeblue, fill=blue!8, thick, minimum width=6cm, text centered, font=\ttfamily\small},
+]
+\node[section, minimum height=0.8cm] (title) {\textbf{FamiliaJuan}};
+\node[class, minimum height=0.9cm, below=0pt of title] (attrs) {
+    \begin{tabular}{l}
+    -- edad\_juan : float \\
+    \end{tabular}
+};
+\node[class, minimum height=1.6cm, below=0pt of attrs] (methods) {
+    \begin{tabular}{l}
+    + \_\_init\_\_(edad\_juan:float) \\
+    + calcular\_edades() : tuple \\
+    + imprimir\_edades() \\
+    \end{tabular}
+};
+\end{tikzpicture}
+\end{figure}
+
+\newpage
+% ===============================================================
+\section{Ejercicio Resuelto No~5}
+
+\subsection{Enunciado}
+Hacer un seguimiento (prueba de escritorio) del siguiente grupo de instrucciones.
+\begin{verbatim}
+INICIO
+  SUMA = 0
+  X = 20
+  SUMA = SUMA + X
+  Y = 40
+  X = X + Y ** 2
+  SUMA = SUMA + X / Y
+  ESCRIBA: "EL VALOR DE LA SUMA ES:", SUMA
+FIN_INICIO
+\end{verbatim}
+
+\subsection{C\'odigo fuente -- \texttt{ejercicio\_resuelto5\_seguimiento.py}}
+
+\begin{lstlisting}[style=pythonstyle, caption={Seguimiento -- ejercicio\_resuelto5\_seguimiento.py}]
+class SeguimientoInstrucciones:
+    def __init__(self):
+        self.suma = 0
+        self.x = 0
+        self.y = 0
+
+    def ejecutar_instrucciones(self):
+        self.suma = 0
+        self.x = 20
+        self.suma = self.suma + self.x
+        self.y = 40
+        self.x = self.x + self.y ** 2
+        self.suma = self.suma + self.x / self.y
+        return self.suma
+
+    def imprimir_resultado(self):
+        resultado = self.ejecutar_instrucciones()
+        print(f"EL VALOR DE LA SUMA ES: {resultado}")
+
+if __name__ == "__main__":
+    seguimiento = SeguimientoInstrucciones()
+    seguimiento.imprimir_resultado()
+\end{lstlisting}
+
+\subsection{Diagrama de clases}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    class/.style={draw=codeblue, fill=backcolour, thick, minimum width=6cm, text centered, font=\ttfamily\small},
+    section/.style={draw=codeblue, fill=blue!8, thick, minimum width=6cm, text centered, font=\ttfamily\small},
+]
+\node[section, minimum height=0.8cm] (title) {\textbf{SeguimientoInstrucciones}};
+\node[class, minimum height=1.2cm, below=0pt of title] (attrs) {
+    \begin{tabular}{l}
+    -- suma : float \\
+    -- x : float \\
+    -- y : float \\
+    \end{tabular}
+};
+\node[class, minimum height=1.6cm, below=0pt of attrs] (methods) {
+    \begin{tabular}{l}
+    + \_\_init\_\_() \\
+    + ejecutar\_instrucciones() : float \\
+    + imprimir\_resultado() \\
+    \end{tabular}
+};
+\end{tikzpicture}
+\end{figure}
+
+\newpage
+% ===============================================================
+\section{Ejercicio Propuesto No~12}
+
+\subsection{Enunciado}
+Un empleado trabaja 48 horas en la semana a raz\'on de \$5.000 hora. El porcentaje de retenci\'on en la fuente es del 12,5\% del salario bruto. Se desea saber cu\'al es el salario bruto, la retenci\'on en la fuente y el salario neto del trabajador.
+
+\subsection{C\'odigo fuente -- \texttt{ejercicio\_propuesto12\_salario.py}}
+
+\begin{lstlisting}[style=pythonstyle, caption={Salario Empleado -- ejercicio\_propuesto12\_salario.py}]
+class Empleado:
+    def __init__(self, horas_semana: float, valor_hora: float, retencion_fuente_porcentaje: float):
+        self.horas_semana = horas_semana
+        self.valor_hora = valor_hora
+        self.retencion_fuente_porcentaje = retencion_fuente_porcentaje
+
+    def calcular_salario_bruto(self):
+        return self.horas_semana * self.valor_hora
+
+    def calcular_retencion_fuente(self):
+        return self.calcular_salario_bruto() * (self.retencion_fuente_porcentaje / 100)
+
+    def calcular_salario_neto(self):
+        return self.calcular_salario_bruto() - self.calcular_retencion_fuente()
+
+    def imprimir_informacion(self):
+        bruto = self.calcular_salario_bruto()
+        retencion = self.calcular_retencion_fuente()
+        neto = self.calcular_salario_neto()
+        print(f"Salario Bruto: ${bruto:,.2f}")
+        print(f"Retencion en la fuente: ${retencion:,.2f}")
+        print(f"Salario Neto: ${neto:,.2f}")
+
+if __name__ == "__main__":
+    empleado = Empleado(48, 5000, 12.5)
+    empleado.imprimir_informacion()
+\end{lstlisting}
+
+\subsection{Diagrama de clases}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    class/.style={draw=codeblue, fill=backcolour, thick, minimum width=8cm, text centered, font=\ttfamily\small},
+    section/.style={draw=codeblue, fill=blue!8, thick, minimum width=8cm, text centered, font=\ttfamily\small},
+]
+\node[section, minimum height=0.8cm] (title) {\textbf{Empleado}};
+\node[class, minimum height=1.2cm, below=0pt of title] (attrs) {
+    \begin{tabular}{l}
+    -- horas\_semana : float \\
+    -- valor\_hora : float \\
+    -- retencion\_fuente\_porcentaje : float \\
+    \end{tabular}
+};
+\node[class, minimum height=2.0cm, below=0pt of attrs] (methods) {
+    \begin{tabular}{l}
+    + \_\_init\_\_(horas:float, valor:float, retencion:float) \\
+    + calcular\_salario\_bruto() : float \\
+    + calcular\_retencion\_fuente() : float \\
+    + calcular\_salario\_neto() : float \\
+    + imprimir\_informacion() \\
+    \end{tabular}
+};
+\end{tikzpicture}
+\end{figure}
+
+\newpage
+% ===============================================================
+\section{Ejercicio Propuesto No~14}
+
+\subsection{Enunciado}
+Elabore un algoritmo que lea un n\'umero y obtenga su cuadrado y su cubo.
+
+\subsection{C\'odigo fuente -- \texttt{ejercicio\_propuesto14\_potencias.py}}
+
+\begin{lstlisting}[style=pythonstyle, caption={Cuadrado y Cubo -- ejercicio\_propuesto14\_potencias.py}]
+class Numero:
+    def __init__(self, valor: float):
+        self.valor = valor
+
+    def obtener_cuadrado(self):
+        return self.valor ** 2
+
+    def obtener_cubo(self):
+        return self.valor ** 3
+
+    def imprimir_resultados(self):
+        print(f"Numero: {self.valor}")
+        print(f"Cuadrado: {self.obtener_cuadrado()}")
+        print(f"Cubo: {self.obtener_cubo()}")
+
+if __name__ == "__main__":
+    numero = Numero(5)
+    numero.imprimir_resultados()
+\end{lstlisting}
+
+\subsection{Diagrama de clases}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    class/.style={draw=codeblue, fill=backcolour, thick, minimum width=6cm, text centered, font=\ttfamily\small},
+    section/.style={draw=codeblue, fill=blue!8, thick, minimum width=6cm, text centered, font=\ttfamily\small},
+]
+\node[section, minimum height=0.8cm] (title) {\textbf{Numero}};
+\node[class, minimum height=0.9cm, below=0pt of title] (attrs) {
+    \begin{tabular}{l}
+    -- valor : float \\
+    \end{tabular}
+};
+\node[class, minimum height=1.6cm, below=0pt of attrs] (methods) {
+    \begin{tabular}{l}
+    + \_\_init\_\_(valor:float) \\
+    + obtener\_cuadrado() : float \\
+    + obtener\_cubo() : float \\
+    + imprimir\_resultados() \\
+    \end{tabular}
+};
+\end{tikzpicture}
+\end{figure}
+
+\newpage
+% ===============================================================
+\section{Ejercicio Propuesto No~17}
+
+\subsection{Enunciado}
+Dado el radio de un c\'irculo. Haga un algoritmo que obtenga el \'area del c\'irculo y la longitud de la circunferencia.
+
+\subsection{C\'odigo fuente -- \texttt{ejercicio\_propuesto17\_circulo.py}}
+
+\begin{lstlisting}[style=pythonstyle, caption={C\'irculo -- ejercicio\_propuesto17\_circulo.py}]
+import math
+
+class Circulo:
+    def __init__(self, radio: float):
+        self.radio = radio
+
+    def calcular_area(self):
+        return math.pi * self.radio ** 2
+
+    def calcular_circunferencia(self):
+        return 2 * math.pi * self.radio
+
+    def imprimir_resultados(self):
+        print(f"Radio del circulo: {self.radio}")
+        print(f"Area del circulo: {self.calcular_area():.4f}")
+        print(f"Longitud de la circunferencia: {self.calcular_circunferencia():.4f}")
+
+if __name__ == "__main__":
+    circulo = Circulo(10)
+    circulo.imprimir_resultados()
+\end{lstlisting}
+
+\subsection{Diagrama de clases}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    class/.style={draw=codeblue, fill=backcolour, thick, minimum width=6.5cm, text centered, font=\ttfamily\small},
+    section/.style={draw=codeblue, fill=blue!8, thick, minimum width=6.5cm, text centered, font=\ttfamily\small},
+]
+\node[section, minimum height=0.8cm] (title) {\textbf{Circulo}};
+\node[class, minimum height=0.9cm, below=0pt of title] (attrs) {
+    \begin{tabular}{l}
+    -- radio : float \\
+    \end{tabular}
+};
+\node[class, minimum height=1.6cm, below=0pt of attrs] (methods) {
+    \begin{tabular}{l}
+    + \_\_init\_\_(radio:float) \\
+    + calcular\_area() : float \\
+    + calcular\_circunferencia() : float \\
+    + imprimir\_resultados() \\
+    \end{tabular}
+};
+\end{tikzpicture}
+\end{figure}
+
+% ---------------------------------------------------------------
+\newpage
+\section{Repositorio GitHub}
+
+El c\'odigo fuente de la Actividad 1 se encuentra en:
+\begin{center}
+    \large\url{https://github.com/yguzmanm-sys/POO-2026-2S}
+\end{center}
+
+\end{document}
