@@ -15,7 +15,7 @@
 \usepackage{xurl}
 \usepackage[colorlinks=true, linkcolor=black, citecolor=black, urlcolor=blue]{hyperref}
 
-% ---------- TikZ para diagramas UML ----------
+% ---------- Configuración de TikZ para diagramas UML nativos ----------
 \usepackage{tikz}
 \usetikzlibrary{babel,shapes.multipart,arrows.meta,positioning,calc}
 
@@ -27,9 +27,9 @@
   uml/.style={
     rectangle split, rectangle split parts=3,
     draw, fill=white, font=\footnotesize, align=left,
-    text width=7cm,
+    text width=7.2cm,
     rectangle split part align={center,left,left},
-    inner xsep=5pt, inner ysep=3pt
+    inner xsep=6pt, inner ysep=4pt
   },
   umltwo/.style={
     uml, rectangle split parts=2,
@@ -88,23 +88,29 @@
 \center
 \IfFileExists{logo_unal.png}{\includegraphics[width=3.2cm,height=4.1cm]{logo_unal.png}\\[0.4cm]}{\vspace*{1cm}}
 \textsc{\Large UNIVERSIDAD NACIONAL DE COLOMBIA}\\[0.4cm]
-{\large \textbf{Facultad de Ciencias}}\\[0.2cm]
-{\large \textbf{Sede Medellín}}\\[1.5cm]
+{\large \textbf{Facultad de Minas}}\\[0.2cm]
+{\large \textbf{Sede Medellín}}\\[0.2cm]
+{\normalsize Departamento de Ciencias de la Computación y la Decisión}\\[1.3cm]
 
 \rule{\linewidth}{0.5mm}\\[0.4cm]
 {\huge \textbf{Programación Orientada a Objetos}}\\[0.3cm]
 {\Large \textit{Actividad 2: Clases, Objetos, Métodos y Diagramas UML}}\\[0.2cm]
-\rule{\linewidth}{0.5mm}\\[1.5cm]
+\rule{\linewidth}{0.5mm}\\[1.3cm]
 
-\textbf{Docente:}\\
-Walter Hugo Arboleda Mazo\\[1.2cm]
+\begin{tabular}{rl}
+    \textbf{Asignatura:} & Programación Orientada a Objetos \\[0.25cm]
+    \textbf{Semestre:}   & 2026-2S \\[0.25cm]
+    \textbf{Actividad:}  & Actividad 2 -- Clases y Objetos (20\%) \\[0.25cm]
+    \textbf{Estudiante:} & Yuliana Stefanía Guzmán Montoya \\[0.25cm]
+    \textbf{Cédula:}     & C.C. 1.001.765.162 \\[0.25cm]
+    \textbf{Docente:}    & Walter Hugo Arboleda Mazo \\[0.25cm]
+    \textbf{Fecha:}      & 8 de octubre de 2026 \\[0.25cm]
+\end{tabular}\\[1.5cm]
 
-{\large \textbf{Integrante:}}\\[0.4cm]
-\begin{tabular}{ll}
-Yuliana Guzmán Montoya
-& C.C. 1.001.765.162 \\
-\end{tabular}\\[2.2cm]
+\textbf{Repositorio GitHub oficial:}\\
+\url{https://github.com/yguzmanm-sys/POO-2026-2S}
 
+\vfill
 {\large Medellín, Colombia \\ Semestre 2026-2S}
 \end{minipage}
 \end{titlepage}
@@ -118,14 +124,14 @@ Yuliana Guzmán Montoya
 % =========================================================================
 \section{Descripción General de la Actividad}
 
-El presente documento consolida la solución y el modelado conceptual de los ejercicios correspondientes a la \textbf{Actividad 2} de la asignatura \textit{Programación Orientada a Objetos (2026-2)}, a partir del texto guía \textit{Ejercicios de programación orientada a objetos con Java y UML} del autor Leonardo Bermón Angarita.
+El presente documento consolida la solución y el modelado conceptual de los ejercicios correspondientes a la \textbf{Actividad 2} de la asignatura \textit{Programación Orientada a Objetos (2026-2S)}, a partir del libro guía \textit{Ejercicios de programación orientada a objetos con Java y UML} del autor Leonardo Bermón Angarita.
 
-Cada uno de los ejercicios fue implementado en lenguaje \textbf{Python}, adaptando fielmente las especificaciones de clases, atributos, modificadores, métodos, sobrecargas y tipos enumerados a la sintaxis y buenas prácticas de Python 3. Asimismo, para cada ejercicio se incluye:
+Cada uno de los ejercicios fue implementado en lenguaje \textbf{Python}, adaptando rigurosamente las especificaciones de clases, atributos, visibilidad, constructores, métodos y tipos enumerados. Asimismo, para cada ejercicio se incluye:
 \begin{enumerate}[leftmargin=*]
-    \item \textbf{Enunciado y Requerimientos:} Descripción formal del problema planteado en el libro guía.
+    \item \textbf{Enunciado y Requerimientos:} Descripción formal del problema planteado en el texto guía.
     \item \textbf{URL del Repositorio GitHub:} Enlace directo y verificable al código fuente del ejercicio alojado en GitHub.
     \item \textbf{Código Fuente en Python:} Implementación completa y comentada con tipado estático opcional (\textit{type hints}).
-    \item \textbf{Diagrama de Clases UML:} Representación gráfica de la arquitectura de clases, relaciones y tipos asociados.
+    \item \textbf{Diagrama de Clases UML Nativo en TikZ:} Representación vectorial generada directamente durante la compilación en Overleaf, modelando clases, atributos, métodos y relaciones asociadas sin depender de imágenes externas.
     \item \textbf{Salida de Ejecución:} Resultados obtenidos al invocar el método principal (\texttt{main}), demostrando la validez del funcionamiento.
 \end{enumerate}
 
@@ -184,7 +190,7 @@ if __name__ == "__main__":
 \end{lstlisting}
 
 \subsection{Diagrama de Clases UML}
-En el diagrama de clases se define la clase \texttt{Persona} con cuatro atributos privados/públicos según el modelado (\texttt{nombre}, \texttt{apellido}, \texttt{documento}, \texttt{nacimiento}) y dos operaciones: el constructor inicializador y el método \texttt{imprimir()}.
+En el diagrama de clases se define la clase \texttt{Persona} con cuatro atributos (\texttt{nombre}, \texttt{apellido}, \texttt{documento}, \texttt{nacimiento}) y sus métodos (\texttt{\_\_init\_\_} e \texttt{imprimir}). El diagrama es generado de forma vectorial mediante TikZ:
 
 \begin{figure}[H]
     \centering
@@ -197,7 +203,7 @@ En el diagrama de clases se define la clase \texttt{Persona} con cuatro atributo
         \nodepart{third}\umlp \_\_init\_\_(nombre: str, apellido: str, documento: int, nacimiento: int)\\
         \umlp imprimir(): None};
     \end{tikzpicture}
-    \caption{Diagrama de clases para el Ejercicio 2.1 (Clase Persona).}
+    \caption{Diagrama de clases UML vectorial para el Ejercicio 2.1 (Clase Persona).}
     \label{fig:uml_ej2_1}
 \end{figure}
 
@@ -312,12 +318,12 @@ if __name__ == "__main__":
 \end{lstlisting}
 
 \subsection{Diagrama de Clases UML}
-El diagrama modela la clase \texttt{Planeta} y la clase enumeración \texttt{TipoPlaneta} con el estereotipo \texttt{\estereo{enumeration}}. La clase \texttt{Planeta} se asocia con \texttt{TipoPlaneta} a través de su atributo \texttt{tipo}.
+El diagrama modela la clase \texttt{Planeta} y la clase enumeración \texttt{TipoPlaneta} con el estereotipo \texttt{\estereo{enumeration}}, vinculado mediante una asociación dirigida:
 
 \begin{figure}[H]
     \centering
     \begin{tikzpicture}
-        \node[uml] (planeta) {\textbf{Planeta}
+        \node[uml, text width=8.5cm] (planeta) {\textbf{Planeta}
         \nodepart{second}\umlm nombre: str = None\\
         \umlm num\_satelites: int = 0\\
         \umlm masa: float = 0.0\\
@@ -331,14 +337,14 @@ El diagrama modela la clase \texttt{Planeta} y la clase enumeración \texttt{Tip
         \umlp densidad(): float\\
         \umlp es\_exterior(): bool};
 
-        \node[umltwo, text width=4cm, below=1.4cm of planeta] (tipoplaneta) {\estereo{enumeration}\\\textbf{TipoPlaneta}
+        \node[umltwo, text width=4cm, below=1.3cm of planeta] (tipoplaneta) {\estereo{enumeration}\\\textbf{TipoPlaneta}
         \nodepart{second}GASEOSO = 1\\
         TERRESTRE = 2\\
         ENANO = 3};
 
         \draw[-{Latex[length=2.5mm]}] (planeta.south) -- node[right, font=\scriptsize] {tipo} (tipoplaneta.north);
     \end{tikzpicture}
-    \caption{Diagrama de clases para el Ejercicio 2.2 (Clase Planeta y Enum TipoPlaneta).}
+    \caption{Diagrama de clases UML vectorial para el Ejercicio 2.2 (Clase Planeta y Enum TipoPlaneta).}
     \label{fig:uml_ej2_2}
 \end{figure}
 
@@ -521,13 +527,13 @@ if __name__ == "__main__":
 \end{lstlisting}
 
 \subsection{Diagrama de Clases UML}
-El diagrama modela la clase \texttt{Automovil}, sus tres enumeraciones asociadas (\texttt{TipoCombustible}, \texttt{TipoAutomovil}, \texttt{TipoColor}) y la clase de prueba \texttt{Prueba\_Automovil} que instancia y manipula el objeto.
+El diagrama modela la clase \texttt{Automovil}, sus tres enumeraciones asociadas (\texttt{TipoCombustible}, \texttt{TipoAutomovil}, \texttt{TipoColor}) y la clase de prueba \texttt{Prueba\_Automovil}:
 
 \begin{figure}[H]
     \centering
-    \resizebox{\textwidth}{!}{%
+    \resizebox{0.95\textwidth}{!}{
     \begin{tikzpicture}
-        \node[uml, text width=9cm] (auto) {\textbf{Automovil}
+        \node[uml, text width=8.8cm] (auto) {\textbf{Automovil}
         \nodepart{second}\umlm marca: str\\
         \umlm modelo: int\\
         \umlm motor: int\\
@@ -556,14 +562,14 @@ El diagrama modela la clase \texttt{Automovil}, sus tres enumeraciones asociadas
         \umlp imprimir(): None\\
         \umlp imprimir\_velocidad\_actual(): None};
 
-        \node[umltwo, text width=4.2cm, anchor=north west] (comb) at ([xshift=2cm]auto.north east) {\estereo{enumeration}\\\textbf{TipoCombustible}
+        \node[umltwo, text width=4.2cm, anchor=north west] (comb) at ([xshift=1.8cm]auto.north east) {\estereo{enumeration}\\\textbf{TipoCombustible}
         \nodepart{second}GASOLINA = 1\\
         BIOETANOL = 2\\
         DIESEL = 3\\
         BIODIESEL = 4\\
         GAS\_NATURAL = 5};
 
-        \node[umltwo, text width=4.2cm, anchor=north west] (tauto) at ([yshift=-0.8cm]comb.south west) {\estereo{enumeration}\\\textbf{TipoAutomovil}
+        \node[umltwo, text width=4.2cm, anchor=north west] (tauto) at ([yshift=-0.7cm]comb.south west) {\estereo{enumeration}\\\textbf{TipoAutomovil}
         \nodepart{second}CARRO\_CIUDAD = 1\\
         SUBCOMPACTO = 2\\
         COMPACTO = 3\\
@@ -571,7 +577,7 @@ El diagrama modela la clase \texttt{Automovil}, sus tres enumeraciones asociadas
         EJECUTIVO = 5\\
         SUV = 6};
 
-        \node[umltwo, text width=4.2cm, anchor=north west] (tcolor) at ([yshift=-0.8cm]tauto.south west) {\estereo{enumeration}\\\textbf{TipoColor}
+        \node[umltwo, text width=4.2cm, anchor=north west] (tcolor) at ([yshift=-0.7cm]tauto.south west) {\estereo{enumeration}\\\textbf{TipoColor}
         \nodepart{second}BLANCO = 1\\
         NEGRO = 2\\
         ROJO = 3\\
@@ -581,15 +587,16 @@ El diagrama modela la clase \texttt{Automovil}, sus tres enumeraciones asociadas
         AZUL = 7\\
         VIOLETA = 8};
 
-        \node[umltwo, text width=6cm, below=1.6cm of auto] (prueba) {\textbf{Prueba\_Automovil}
+        \node[umltwo, text width=6cm, below=1.4cm of auto] (prueba) {\textbf{Prueba\_Automovil}
         \nodepart{second}\umlp main(): None \quad \{static\}};
 
         \draw[-{Latex[length=2.5mm]}] (auto.east) -- node[above, sloped, font=\scriptsize, fill=white, inner sep=1pt] {tipo\_combustible} (comb.west);
         \draw[-{Latex[length=2.5mm]}] (auto.east) -- node[above, sloped, font=\scriptsize, fill=white, inner sep=1pt] {tipo\_automovil} (tauto.west);
         \draw[-{Latex[length=2.5mm]}] (auto.east) -- node[above, sloped, font=\scriptsize, fill=white, inner sep=1pt] {color} (tcolor.west);
         \draw[dashed, -{Latex[length=2.5mm]}] (prueba.north) -- node[right, font=\scriptsize] {usa} (auto.south);
-    \end{tikzpicture}}
-    \caption{Diagrama de clases para el Ejercicio 2.3 (Clase Automóvil y Enumeraciones).}
+    \end{tikzpicture}
+    }
+    \caption{Diagrama de clases UML vectorial para el Ejercicio 2.3 (Clase Automóvil y Enumeraciones).}
     \label{fig:uml_ej2_3}
 \end{figure}
 
@@ -722,11 +729,11 @@ if __name__ == "__main__":
 \end{lstlisting}
 
 \subsection{Diagrama de Clases UML}
-El diagrama ilustra las cuatro clases que representan las figuras geométricas independientes y la clase de prueba \texttt{Figuras\_geometricas} con una relación de uso (\textit{dependency/use}) hacia cada figura.
+El diagrama ilustra las cuatro clases que representan las figuras geométricas independientes y la clase de prueba \texttt{Figuras\_geometricas} con una relación de uso (\textit{dependency/use}) hacia cada figura:
 
 \begin{figure}[H]
     \centering
-    \resizebox{\textwidth}{!}{%
+    \resizebox{\textwidth}{!}{
     \begin{tikzpicture}
         \node[uml, text width=3.6cm, anchor=north west] (circ) at (0,0) {\textbf{Circulo}
         \nodepart{second}\umlm radio: float
@@ -747,7 +754,7 @@ El diagrama ilustra las cuatro clases que representan las figuras geométricas i
         \umlp calcular\_area(): float\\
         \umlp calcular\_perimetro(): float};
 
-        \node[uml, text width=4.4cm, anchor=north west] (tri) at ([xshift=0.4cm]cuad.north east) {\textbf{TrianguloRectangulo}
+        \node[uml, text width=4.5cm, anchor=north west] (tri) at ([xshift=0.4cm]cuad.north east) {\textbf{TrianguloRectangulo}
         \nodepart{second}\umlm base: float\\
         \umlm altura: float
         \nodepart{third}\umlp \_\_init\_\_(base: float, altura: float)\\
@@ -756,15 +763,16 @@ El diagrama ilustra las cuatro clases que representan las figuras geométricas i
         \umlp calcular\_perimetro(): float\\
         \umlp determinar\_tipo\_triangulo(): str};
 
-        \node[umltwo, text width=5cm, anchor=north] (fig) at ($(rect.south)!0.5!(cuad.south)+(0,-2.5cm)$) {\textbf{Figuras\_geometricas}
+        \node[umltwo, text width=5cm, anchor=north] (fig) at ($(rect.south)!0.5!(cuad.south)+(0,-2.3cm)$) {\textbf{Figuras\_geometricas}
         \nodepart{second}\umlp main(): None \quad \{static\}};
 
         \draw[dashed, -{Latex[length=2.5mm]}] (fig.north) -- node[near end, left, font=\scriptsize] {usa} (circ.south);
         \draw[dashed, -{Latex[length=2.5mm]}] (fig.north) -- (rect.south);
         \draw[dashed, -{Latex[length=2.5mm]}] (fig.north) -- (cuad.south);
         \draw[dashed, -{Latex[length=2.5mm]}] (fig.north) -- (tri.south);
-    \end{tikzpicture}}
-    \caption{Diagrama de clases para el Ejercicio 2.4 (Figuras Geométricas).}
+    \end{tikzpicture}
+    }
+    \caption{Diagrama de clases UML vectorial para el Ejercicio 2.4 (Figuras Geométricas).}
     \label{fig:uml_ej2_4}
 \end{figure}
 
@@ -876,13 +884,12 @@ if __name__ == "__main__":
 \end{lstlisting}
 
 \subsection{Diagrama de Clases UML}
-El diagrama modela la clase \texttt{CuentaBancaria} junto con el tipo enumerado \texttt{tipoCuenta} (\texttt{AHORROS}, \texttt{CORRIENTE}) y las operaciones de consulta, consignación, retiro y transferencia entre cuentas.
+El diagrama modela la clase \texttt{CuentaBancaria} y la enumeración \texttt{tipoCuenta}:
 
 \begin{figure}[H]
     \centering
-    \resizebox{\textwidth}{!}{%
     \begin{tikzpicture}
-        \node[uml] (cuenta) {\textbf{CuentaBancaria}
+        \node[uml, text width=8.5cm] (cuenta) {\textbf{CuentaBancaria}
         \nodepart{second}\umlm nombresTitular: str\\
         \umlm apellidosTitular: str\\
         \umlm numeroCuenta: int\\
@@ -896,13 +903,13 @@ El diagrama modela la clase \texttt{CuentaBancaria} junto con el tipo enumerado 
         \umlp compararCuenta(cuenta: CuentaBancaria): bool\\
         \umlp transferencia(cuenta: CuentaBancaria, valor: float): bool};
 
-        \node[umltwo, text width=3.2cm, right=1.8cm of cuenta] (tcuenta) {\estereo{enumeration}\\\textbf{tipoCuenta}
+        \node[umltwo, text width=3.4cm, right=1.6cm of cuenta] (tcuenta) {\estereo{enumeration}\\\textbf{tipoCuenta}
         \nodepart{second}AHORROS\\
         CORRIENTE};
 
         \draw[dashed, -{Latex[length=2.5mm]}] (cuenta.east) -- node[above, font=\scriptsize] {valores} (tcuenta.west);
-    \end{tikzpicture}}
-    \caption{Diagrama de clases para el Ejercicio 2.5 (Clase CuentaBancaria).}
+    \end{tikzpicture}
+    \caption{Diagrama de clases UML vectorial para el Ejercicio 2.5 (Clase CuentaBancaria).}
     \label{fig:uml_ej2_5}
 \end{figure}
 
