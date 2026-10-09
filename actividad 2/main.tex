@@ -1,0 +1,937 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-nodecimaldot]{babel}
+\usepackage{amssymb,latexsym,amsmath}
+\usepackage[a4paper,top=2.5cm,bottom=2.5cm,left=2.5cm,right=2.5cm,marginparwidth=1.75cm]{geometry}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{xurl}
+\usepackage[colorlinks=true, linkcolor=black, citecolor=black, urlcolor=blue]{hyperref}
+
+% ---------- TikZ para diagramas UML ----------
+\usepackage{tikz}
+\usetikzlibrary{babel,shapes.multipart,arrows.meta,positioning,calc}
+
+\newcommand{\umlm}{$-$\,}
+\newcommand{\umlp}{$+$\,}
+\newcommand{\estereo}[1]{\guillemotleft\,#1\,\guillemotright}
+
+\tikzset{
+  uml/.style={
+    rectangle split, rectangle split parts=3,
+    draw, fill=white, font=\footnotesize, align=left,
+    text width=7cm,
+    rectangle split part align={center,left,left},
+    inner xsep=5pt, inner ysep=3pt
+  },
+  umltwo/.style={
+    uml, rectangle split parts=2,
+    rectangle split part align={center,left}
+  }
+}
+
+% Configuración de colores para código fuente
+\definecolor{codegreen}{rgb}{0,0.5,0}
+\definecolor{codegray}{rgb}{0.45,0.45,0.45}
+\definecolor{codepurple}{rgb}{0.55,0,0.75}
+\definecolor{backcolour}{rgb}{0.97,0.97,0.98}
+
+% Configuración de listings para Python y soporte completo UTF-8
+\lstset{
+    language=Python,
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen}\itshape,
+    keywordstyle=\color{blue}\bfseries,
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=7pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=4,
+    frame=single,
+    rulecolor=\color{gray!30},
+    inputencoding=utf8,
+    extendedchars=true,
+    literate=
+        {á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+        {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
+        {ñ}{{\~n}}1 {Ñ}{{\~N}}1 {¿}{{?`}}1 {¡}{{!`}}1
+        {³}{{$^3$}}1 {²}{{$^2$}}1
+}
+
+\renewcommand{\contentsname}{Tabla de Contenido}
+\renewcommand{\listfigurename}{Índice de Figuras}
+\renewcommand{\lstlistingname}{Código}
+
+\begin{document}
+
+% =========================================================================
+% PORTADA INSTITUCIONAL UNAL
+% =========================================================================
+\begin{titlepage}
+\center
+\begin{minipage}{13.5cm}
+\center
+\IfFileExists{logo_unal.png}{\includegraphics[width=3.2cm,height=4.1cm]{logo_unal.png}\\[0.4cm]}{\vspace*{1cm}}
+\textsc{\Large UNIVERSIDAD NACIONAL DE COLOMBIA}\\[0.4cm]
+{\large \textbf{Facultad de Ciencias}}\\[0.2cm]
+{\large \textbf{Sede Medellín}}\\[1.5cm]
+
+\rule{\linewidth}{0.5mm}\\[0.4cm]
+{\huge \textbf{Programación Orientada a Objetos}}\\[0.3cm]
+{\Large \textit{Actividad 2: Clases, Objetos, Métodos y Diagramas UML}}\\[0.2cm]
+\rule{\linewidth}{0.5mm}\\[1.5cm]
+
+\textbf{Docente:}\\
+Walter Hugo Arboleda Mazo\\[1.2cm]
+
+{\large \textbf{Integrante:}}\\[0.4cm]
+\begin{tabular}{ll}
+Yuliana Guzmán Montoya
+& C.C. 1.001.765.162 \\
+\end{tabular}\\[2.2cm]
+
+{\large Medellín, Colombia \\ Semestre 2026-2S}
+\end{minipage}
+\end{titlepage}
+
+\newpage
+\tableofcontents
+\newpage
+
+% =========================================================================
+% INTRODUCCIÓN Y DESCRIPCIÓN GENERAL
+% =========================================================================
+\section{Descripción General de la Actividad}
+
+El presente documento consolida la solución y el modelado conceptual de los ejercicios correspondientes a la \textbf{Actividad 2} de la asignatura \textit{Programación Orientada a Objetos (2026-2)}, a partir del texto guía \textit{Ejercicios de programación orientada a objetos con Java y UML} del autor Leonardo Bermón Angarita.
+
+Cada uno de los ejercicios fue implementado en lenguaje \textbf{Python}, adaptando fielmente las especificaciones de clases, atributos, modificadores, métodos, sobrecargas y tipos enumerados a la sintaxis y buenas prácticas de Python 3. Asimismo, para cada ejercicio se incluye:
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Enunciado y Requerimientos:} Descripción formal del problema planteado en el libro guía.
+    \item \textbf{URL del Repositorio GitHub:} Enlace directo y verificable al código fuente del ejercicio alojado en GitHub.
+    \item \textbf{Código Fuente en Python:} Implementación completa y comentada con tipado estático opcional (\textit{type hints}).
+    \item \textbf{Diagrama de Clases UML:} Representación gráfica de la arquitectura de clases, relaciones y tipos asociados.
+    \item \textbf{Salida de Ejecución:} Resultados obtenidos al invocar el método principal (\texttt{main}), demostrando la validez del funcionamiento.
+\end{enumerate}
+
+\newpage
+
+% =========================================================================
+% EJERCICIO 2.1
+% =========================================================================
+\section{Ejercicio 2.1 — Definición de Clases: Clase Persona}
+\textbf{Referencia en libro:} Capítulo 2, página 63.
+
+\subsection{Enunciado del problema}
+Se requiere un programa que modele el concepto de una persona. Una persona posee nombre, apellido, número de documento de identidad y año de nacimiento. La clase debe tener un constructor que inicialice los valores de sus respectivos atributos.
+
+La clase debe incluir los siguientes métodos:
+\begin{itemize}
+    \item Definir un método que imprima en pantalla los valores de los atributos del objeto.
+    \item En un método \texttt{main} se deben crear dos personas y mostrar los valores de sus atributos en pantalla.
+\end{itemize}
+
+\subsection{URL del repositorio en GitHub}
+\noindent \textbf{Enlace:} \url{https://github.com/yguzmanm-sys/POO-2026-2S/blob/main/actividad%202/Actividad2_Ejercicio2_1.py}
+
+\subsection{Código fuente en Python}
+\begin{lstlisting}[caption={Implementación de la clase Persona (\texttt{Actividad2\_Ejercicio2\_1.py})}]
+class Persona:
+    def __init__(self, nombre: str, apellido: str, documento: int, nacimiento: int):
+        # Constructor que inicializa los atributos
+        self.nombre = nombre
+        self.apellido = apellido
+        self.documento = documento
+        self.nacimiento = nacimiento
+
+    def imprimir(self):
+        # Metodo que imprime los valores de los atributos
+        print(f"Nombre: {self.nombre}")
+        print(f"Apellido: {self.apellido}")
+        print(f"Documento: {self.documento}")
+        print(f"Año de Nacimiento: {self.nacimiento}")
+
+def main():
+    # Crear dos personas
+    persona1 = Persona("Pedro", "Pérez", 1053121010, 1998)
+    persona2 = Persona("Luis", "León", 1053223344, 2001)
+
+    # Imprimir los valores de los atributos de las personas
+    print("PERSONA #1")
+    persona1.imprimir()
+    print()  # Espacio entre las personas
+    print("PERSONA #2")
+    persona2.imprimir()
+
+# Llamada a la funcion main
+if __name__ == "__main__":
+    main()
+\end{lstlisting}
+
+\subsection{Diagrama de Clases UML}
+En el diagrama de clases se define la clase \texttt{Persona} con cuatro atributos privados/públicos según el modelado (\texttt{nombre}, \texttt{apellido}, \texttt{documento}, \texttt{nacimiento}) y dos operaciones: el constructor inicializador y el método \texttt{imprimir()}.
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \node[uml] (persona) {\textbf{Persona}
+        \nodepart{second}\umlm nombre: str\\
+        \umlm apellido: str\\
+        \umlm documento: int\\
+        \umlm nacimiento: int
+        \nodepart{third}\umlp \_\_init\_\_(nombre: str, apellido: str, documento: int, nacimiento: int)\\
+        \umlp imprimir(): None};
+    \end{tikzpicture}
+    \caption{Diagrama de clases para el Ejercicio 2.1 (Clase Persona).}
+    \label{fig:uml_ej2_1}
+\end{figure}
+
+\subsection{Resultado de ejecución}
+\begin{verbatim}
+PERSONA #1
+Nombre: Pedro
+Apellido: Pérez
+Documento: 1053121010
+Año de Nacimiento: 1998
+
+PERSONA #2
+Nombre: Luis
+Apellido: León
+Documento: 1053223344
+Año de Nacimiento: 2001
+\end{verbatim}
+
+\newpage
+
+% =========================================================================
+% EJERCICIO 2.2
+% =========================================================================
+\section{Ejercicio 2.2 — Atributos Primitivos y Enumerados: Clase Planeta}
+\textbf{Referencia en libro:} Capítulo 2, página 66 (y resolución en páginas 67--72).
+
+\subsection{Enunciado del problema}
+Se requiere un programa que modele el concepto de un planeta del sistema solar. Un planeta tiene los siguientes atributos:
+\begin{itemize}
+    \item Nombre de tipo \texttt{str} con valor inicial \texttt{None}.
+    \item Cantidad de satélites de tipo \texttt{int} con valor inicial $0$.
+    \item Masa en kilogramos de tipo \texttt{float} con valor inicial $0.0$.
+    \item Volumen en kilómetros cúbicos de tipo \texttt{float} con valor inicial $0.0$.
+    \item Diámetro en kilómetros de tipo \texttt{int} con valor inicial $0$.
+    \item Distancia media al Sol en kilómetros de tipo \texttt{int} con valor inicial $0$.
+    \item Tipo de planeta (clasificación por tamaño), mediante un enumerado con los valores: \texttt{GASEOSO}, \texttt{TERRESTRE} y \texttt{ENANO}.
+    \item Observable a simple vista, de tipo booleano con valor inicial \texttt{False}.
+\end{itemize}
+
+La clase debe incluir los métodos:
+\begin{itemize}
+    \item Constructor que inicialice los atributos del planeta.
+    \item Método para imprimir en pantalla los datos del planeta.
+    \item Método para calcular la densidad del planeta como el cociente $\text{masa} / \text{volumen}$.
+    \item Método para determinar si es un planeta exterior: un planeta exterior se encuentra más allá de $3.4\text{ UA}$, donde $1\text{ UA} = 149\,597\,870\text{ km}$.
+    \item Método \texttt{main} que instancie la Tierra y Júpiter, muestre su información, densidades y si son exteriores.
+\end{itemize}
+
+\subsection{URL del repositorio en GitHub}
+\noindent \textbf{Enlace:} \url{https://github.com/yguzmanm-sys/POO-2026-2S/blob/main/actividad%202/Actividad2_Ejercicio2_2.py}
+
+\subsection{Código fuente en Python}
+\begin{lstlisting}[caption={Implementación de la clase Planeta y enumeración TipoPlaneta (\texttt{Actividad2\_Ejercicio2\_2.py})}]
+from enum import Enum
+
+class TipoPlaneta(Enum):
+    GASEOSO = 1
+    TERRESTRE = 2
+    ENANO = 3
+
+class Planeta:
+    def __init__(self, nombre: str = None, num_satelites: int = 0, masa: float = 0.0,
+                 volumen: float = 0.0, diametro: int = 0, distancia_sol: int = 0,
+                 tipo: TipoPlaneta = None, observable: bool = False):
+        # Constructor que inicializa los atributos
+        self.nombre = nombre
+        self.num_satelites = num_satelites
+        self.masa = masa
+        self.volumen = volumen
+        self.diametro = diametro
+        self.distancia_sol = distancia_sol
+        self.tipo = tipo
+        self.observable = observable
+
+    def mostrar_info(self):
+        # Metodo que imprime los valores de los atributos
+        print(f"Nombre del planeta = {self.nombre}")
+        print(f"Cantidad de satélites = {self.num_satelites}")
+        print(f"Masa del planeta (kg) = {self.masa}")
+        print(f"Volumen del planeta (km³) = {self.volumen}")
+        print(f"Diámetro del planeta (km) = {self.diametro}")
+        print(f"Distancia media al sol (km) = {self.distancia_sol}")
+        print(f"Tipo de planeta = {self.tipo.name if self.tipo else 'No definido'}")
+        print(f"Es observable a simple vista = {self.observable}")
+
+    def densidad(self):
+        # Calculo de la densidad
+        if self.volumen > 0:
+            return self.masa / self.volumen
+        return 0.0
+
+    def es_exterior(self):
+        UA = 149597870
+        # Es exterior si esta mas alla de 3.4 UA
+        return self.distancia_sol > 3.4 * UA
+
+if __name__ == "__main__":
+    # Crear dos planetas
+    planeta1 = Planeta("Tierra", 1, 5.9736e24, 1.08321e12, 12742,
+                       150000000, TipoPlaneta.TERRESTRE, True)
+    planeta2 = Planeta("Júpiter", 79, 1.898e27, 1.4313e15,
+                       139820, 778500000, TipoPlaneta.GASEOSO, True)
+
+    # Mostrar info
+    planeta1.mostrar_info()
+    print(f"Densidad de {planeta1.nombre} = {planeta1.densidad()} kg/km³")
+    print(f"¿Es exterior? {planeta1.es_exterior()}\n")
+
+    planeta2.mostrar_info()
+    print(f"Densidad de {planeta2.nombre} = {planeta2.densidad()} kg/km³")
+    print(f"¿Es exterior? {planeta2.es_exterior()}")
+\end{lstlisting}
+
+\subsection{Diagrama de Clases UML}
+El diagrama modela la clase \texttt{Planeta} y la clase enumeración \texttt{TipoPlaneta} con el estereotipo \texttt{\estereo{enumeration}}. La clase \texttt{Planeta} se asocia con \texttt{TipoPlaneta} a través de su atributo \texttt{tipo}.
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \node[uml] (planeta) {\textbf{Planeta}
+        \nodepart{second}\umlm nombre: str = None\\
+        \umlm num\_satelites: int = 0\\
+        \umlm masa: float = 0.0\\
+        \umlm volumen: float = 0.0\\
+        \umlm diametro: int = 0\\
+        \umlm distancia\_sol: int = 0\\
+        \umlm tipo: TipoPlaneta\\
+        \umlm observable: bool = False
+        \nodepart{third}\umlp \_\_init\_\_(nombre, num\_satelites, masa, volumen, diametro, distancia\_sol, tipo, observable)\\
+        \umlp mostrar\_info(): None\\
+        \umlp densidad(): float\\
+        \umlp es\_exterior(): bool};
+
+        \node[umltwo, text width=4cm, below=1.4cm of planeta] (tipoplaneta) {\estereo{enumeration}\\\textbf{TipoPlaneta}
+        \nodepart{second}GASEOSO = 1\\
+        TERRESTRE = 2\\
+        ENANO = 3};
+
+        \draw[-{Latex[length=2.5mm]}] (planeta.south) -- node[right, font=\scriptsize] {tipo} (tipoplaneta.north);
+    \end{tikzpicture}
+    \caption{Diagrama de clases para el Ejercicio 2.2 (Clase Planeta y Enum TipoPlaneta).}
+    \label{fig:uml_ej2_2}
+\end{figure}
+
+\subsection{Resultado de ejecución}
+\begin{verbatim}
+Nombre del planeta = Tierra
+Cantidad de satélites = 1
+Masa del planeta (kg) = 5.9736e+24
+Volumen del planeta (km³) = 1083210000000.0
+Diámetro del planeta (km) = 12742
+Distancia media al sol (km) = 150000000
+Tipo de planeta = TERRESTRE
+Es observable a simple vista = True
+Densidad de Tierra = 5514720137369.484 kg/km³
+¿Es exterior? False
+
+Nombre del planeta = Júpiter
+Cantidad de satélites = 79
+Masa del planeta (kg) = 1.898e+27
+Volumen del planeta (km³) = 1431300000000000.0
+Diámetro del planeta (km) = 139820
+Distancia media al sol (km) = 778500000
+Tipo de planeta = GASEOSO
+Es observable a simple vista = True
+Densidad de Júpiter = 1326067211625.7947 kg/km³
+¿Es exterior? True
+\end{verbatim}
+
+\newpage
+
+% =========================================================================
+% EJERCICIO 2.3
+% =========================================================================
+\section{Ejercicio 2.3 — Estado de un Objeto, Getters y Setters: Clase Automóvil}
+\textbf{Referencia en libro:} Capítulo 2, página 73 (y resolución en páginas 74--85).
+
+\subsection{Enunciado del problema}
+Se requiere un programa que modele el concepto de un automóvil con los siguientes atributos:
+\begin{itemize}
+    \item Marca (\texttt{str}), modelo (año de fabricación, \texttt{int}), motor (cilindraje en litros, \texttt{int}).
+    \item Tipo de combustible: enumerado (\texttt{GASOLINA}, \texttt{BIOETANOL}, \texttt{DIESEL}, \texttt{BIODIESEL}, \texttt{GAS\_NATURAL}).
+    \item Tipo de automóvil: enumerado (\texttt{CARRO\_CIUDAD}, \texttt{SUBCOMPACTO}, \texttt{COMPACTO}, \texttt{FAMILIAR}, \texttt{EJECUTIVO}, \texttt{SUV}).
+    \item Número de puertas (\texttt{int}), cantidad de asientos (\texttt{int}), velocidad máxima (\texttt{int}), color (enumerado: \texttt{BLANCO}, \texttt{NEGRO}, \texttt{ROJO}, \texttt{NARANJA}, \texttt{AMARILLO}, \texttt{VERDE}, \texttt{AZUL}, \texttt{VIOLETA}) y velocidad actual (\texttt{int}, inicialmente $0$).
+\end{itemize}
+
+La clase debe implementar:
+\begin{itemize}
+    \item Métodos \textit{getters} y \textit{setters} para todos sus atributos.
+    \item Métodos para acelerar, desacelerar y frenar, garantizando que no se supere la velocidad máxima ni se decremente por debajo de $0\text{ km/h}$.
+    \item Método para estimar el tiempo de llegada dada una distancia en kilómetros.
+    \item Clase de prueba \texttt{Prueba\_Automovil} con método \texttt{main} para simular aceleraciones y frenados controlados.
+\end{itemize}
+
+\subsection{URL del repositorio en GitHub}
+\noindent \textbf{Enlace:} \url{https://github.com/yguzmanm-sys/POO-2026-2S/blob/main/actividad%202/Actividad2_Ejercicio2_3_Automovil.py}
+
+\subsection{Código fuente en Python}
+\begin{lstlisting}[caption={Implementación de la clase Automóvil y pruebas (\texttt{Actividad2\_Ejercicio2\_3\_Automovil.py})}]
+from enum import Enum
+
+class TipoCombustible(Enum):
+    GASOLINA = 1
+    BIOETANOL = 2
+    DIESEL = 3
+    BIODIESEL = 4
+    GAS_NATURAL = 5
+
+class TipoAutomovil(Enum):
+    CARRO_CIUDAD = 1
+    SUBCOMPACTO = 2
+    COMPACTO = 3
+    FAMILIAR = 4
+    EJECUTIVO = 5
+    SUV = 6
+
+class TipoColor(Enum):
+    BLANCO = 1
+    NEGRO = 2
+    ROJO = 3
+    NARANJA = 4
+    AMARILLO = 5
+    VERDE = 6
+    AZUL = 7
+    VIOLETA = 8
+
+class Automovil:
+    def __init__(self, marca: str, modelo: int, motor: int,
+                 tipo_combustible: TipoCombustible, tipo_automovil: TipoAutomovil,
+                 numero_puertas: int, cantidad_asientos: int,
+                 velocidad_maxima: int, color: TipoColor):
+        self.marca = marca
+        self.modelo = modelo
+        self.motor = motor
+        self.tipo_combustible = tipo_combustible
+        self.tipo_automovil = tipo_automovil
+        self.numero_puertas = numero_puertas
+        self.cantidad_asientos = cantidad_asientos
+        self.velocidad_maxima = velocidad_maxima
+        self.color = color
+        self.velocidad_actual = 0
+
+    # Getters
+    def get_marca(self): return self.marca
+    def get_modelo(self): return self.modelo
+    def get_motor(self): return self.motor
+    def get_tipo_combustible(self): return self.tipo_combustible
+    def get_tipo_automovil(self): return self.tipo_automovil
+    def get_numero_puertas(self): return self.numero_puertas
+    def get_cantidad_asientos(self): return self.cantidad_asientos
+    def get_velocidad_maxima(self): return self.velocidad_maxima
+    def get_color(self): return self.color
+    def get_velocidad_actual(self): return self.velocidad_actual
+
+    # Setters
+    def set_marca(self, marca): self.marca = marca
+    def set_modelo(self, modelo): self.modelo = modelo
+    def set_motor(self, motor): self.motor = motor
+    def set_tipo_combustible(self, tipo_combustible): self.tipo_combustible = tipo_combustible
+    def set_tipo_automovil(self, tipo_automovil): self.tipo_automovil = tipo_automovil
+    def set_numero_puertas(self, numero_puertas): self.numero_puertas = numero_puertas
+    def set_cantidad_asientos(self, cantidad_asientos): self.cantidad_asientos = cantidad_asientos
+    def set_velocidad_maxima(self, velocidad_maxima): self.velocidad_maxima = velocidad_maxima
+    def set_color(self, color): self.color = color
+    def set_velocidad_actual(self, velocidad_actual): self.velocidad_actual = velocidad_actual
+
+    def acelerar(self, aceleracion):
+        if self.velocidad_actual + aceleracion > self.velocidad_maxima:
+            self.velocidad_actual = self.velocidad_maxima
+            print("No se puede superar la velocidad máxima.")
+        else:
+            self.velocidad_actual += aceleracion
+
+    def desacelerar(self, desaceleracion):
+        if self.velocidad_actual - desaceleracion < 0:
+            self.velocidad_actual = 0
+            print("No se puede decrementar a una velocidad negativa.")
+        else:
+            self.velocidad_actual -= desaceleracion
+
+    def frenar(self):
+        self.velocidad_actual = 0
+
+    def calcular_tiempo_llegada(self, distancia):
+        if self.velocidad_actual > 0:
+            return distancia / self.velocidad_actual
+        return float('inf')
+
+    def imprimir(self):
+        print(f"Marca = {self.marca}")
+        print(f"Modelo = {self.modelo}")
+        print(f"Motor = {self.motor}")
+        print(f"Tipo de combustible = {self.tipo_combustible.name}")
+        print(f"Tipo de automóvil = {self.tipo_automovil.name}")
+        print(f"Número de puertas = {self.numero_puertas}")
+        print(f"Cantidad de asientos = {self.cantidad_asientos}")
+        print(f"Velocidad máxima = {self.velocidad_maxima}")
+        print(f"Color = {self.color.name}")
+
+    def imprimir_velocidad_actual(self):
+        print(f"Velocidad actual = {self.velocidad_actual}")
+
+class Prueba_Automovil:
+    @staticmethod
+    def main():
+        auto1 = Automovil("Ford", 2018, 3, TipoCombustible.DIESEL,
+                          TipoAutomovil.EJECUTIVO, 5, 6, 250, TipoColor.NEGRO)
+        auto1.imprimir()
+        auto1.set_velocidad_actual(100)
+        auto1.imprimir_velocidad_actual()
+        auto1.acelerar(20)
+        auto1.imprimir_velocidad_actual()
+        auto1.desacelerar(50)
+        auto1.imprimir_velocidad_actual()
+        auto1.frenar()
+        auto1.imprimir_velocidad_actual()
+        auto1.desacelerar(20)
+
+if __name__ == "__main__":
+    Prueba_Automovil.main()
+\end{lstlisting}
+
+\subsection{Diagrama de Clases UML}
+El diagrama modela la clase \texttt{Automovil}, sus tres enumeraciones asociadas (\texttt{TipoCombustible}, \texttt{TipoAutomovil}, \texttt{TipoColor}) y la clase de prueba \texttt{Prueba\_Automovil} que instancia y manipula el objeto.
+
+\begin{figure}[H]
+    \centering
+    \resizebox{\textwidth}{!}{%
+    \begin{tikzpicture}
+        \node[uml, text width=9cm] (auto) {\textbf{Automovil}
+        \nodepart{second}\umlm marca: str\\
+        \umlm modelo: int\\
+        \umlm motor: int\\
+        \umlm tipo\_combustible: TipoCombustible\\
+        \umlm tipo\_automovil: TipoAutomovil\\
+        \umlm numero\_puertas: int\\
+        \umlm cantidad\_asientos: int\\
+        \umlm velocidad\_maxima: int\\
+        \umlm color: TipoColor\\
+        \umlm velocidad\_actual: int = 0
+        \nodepart{third}\umlp \_\_init\_\_(marca, modelo, motor, tipo\_combustible, tipo\_automovil, numero\_puertas, cantidad\_asientos, velocidad\_maxima, color)\\
+        \umlp get\_marca() / set\_marca(marca)\\
+        \umlp get\_modelo() / set\_modelo(modelo)\\
+        \umlp get\_motor() / set\_motor(motor)\\
+        \umlp get\_tipo\_combustible() / set\_tipo\_combustible(tipo\_combustible)\\
+        \umlp get\_tipo\_automovil() / set\_tipo\_automovil(tipo\_automovil)\\
+        \umlp get\_numero\_puertas() / set\_numero\_puertas(numero\_puertas)\\
+        \umlp get\_cantidad\_asientos() / set\_cantidad\_asientos(cantidad\_asientos)\\
+        \umlp get\_velocidad\_maxima() / set\_velocidad\_maxima(velocidad\_maxima)\\
+        \umlp get\_color() / set\_color(color)\\
+        \umlp get\_velocidad\_actual() / set\_velocidad\_actual(velocidad\_actual)\\
+        \umlp acelerar(aceleracion: int): None\\
+        \umlp desacelerar(desaceleracion: int): None\\
+        \umlp frenar(): None\\
+        \umlp calcular\_tiempo\_llegada(distancia: float): float\\
+        \umlp imprimir(): None\\
+        \umlp imprimir\_velocidad\_actual(): None};
+
+        \node[umltwo, text width=4.2cm, anchor=north west] (comb) at ([xshift=2cm]auto.north east) {\estereo{enumeration}\\\textbf{TipoCombustible}
+        \nodepart{second}GASOLINA = 1\\
+        BIOETANOL = 2\\
+        DIESEL = 3\\
+        BIODIESEL = 4\\
+        GAS\_NATURAL = 5};
+
+        \node[umltwo, text width=4.2cm, anchor=north west] (tauto) at ([yshift=-0.8cm]comb.south west) {\estereo{enumeration}\\\textbf{TipoAutomovil}
+        \nodepart{second}CARRO\_CIUDAD = 1\\
+        SUBCOMPACTO = 2\\
+        COMPACTO = 3\\
+        FAMILIAR = 4\\
+        EJECUTIVO = 5\\
+        SUV = 6};
+
+        \node[umltwo, text width=4.2cm, anchor=north west] (tcolor) at ([yshift=-0.8cm]tauto.south west) {\estereo{enumeration}\\\textbf{TipoColor}
+        \nodepart{second}BLANCO = 1\\
+        NEGRO = 2\\
+        ROJO = 3\\
+        NARANJA = 4\\
+        AMARILLO = 5\\
+        VERDE = 6\\
+        AZUL = 7\\
+        VIOLETA = 8};
+
+        \node[umltwo, text width=6cm, below=1.6cm of auto] (prueba) {\textbf{Prueba\_Automovil}
+        \nodepart{second}\umlp main(): None \quad \{static\}};
+
+        \draw[-{Latex[length=2.5mm]}] (auto.east) -- node[above, sloped, font=\scriptsize, fill=white, inner sep=1pt] {tipo\_combustible} (comb.west);
+        \draw[-{Latex[length=2.5mm]}] (auto.east) -- node[above, sloped, font=\scriptsize, fill=white, inner sep=1pt] {tipo\_automovil} (tauto.west);
+        \draw[-{Latex[length=2.5mm]}] (auto.east) -- node[above, sloped, font=\scriptsize, fill=white, inner sep=1pt] {color} (tcolor.west);
+        \draw[dashed, -{Latex[length=2.5mm]}] (prueba.north) -- node[right, font=\scriptsize] {usa} (auto.south);
+    \end{tikzpicture}}
+    \caption{Diagrama de clases para el Ejercicio 2.3 (Clase Automóvil y Enumeraciones).}
+    \label{fig:uml_ej2_3}
+\end{figure}
+
+\subsection{Resultado de ejecución}
+\begin{verbatim}
+Marca = Ford
+Modelo = 2018
+Motor = 3
+Tipo de combustible = DIESEL
+Tipo de automóvil = EJECUTIVO
+Número de puertas = 5
+Cantidad de asientos = 6
+Velocidad máxima = 250
+Color = NEGRO
+Velocidad actual = 100
+Velocidad actual = 120
+Velocidad actual = 70
+Velocidad actual = 0
+No se puede decrementar a una velocidad negativa.
+\end{verbatim}
+
+\newpage
+
+% =========================================================================
+% EJERCICIO 2.4
+% =========================================================================
+\section{Ejercicio 2.4 — Figuras Geométricas: Círculo, Rectángulo, Cuadrado y Triángulo Rectángulo}
+\textbf{Referencia en libro:} Capítulo 2, página 86 (y resolución en páginas 87--94).
+
+\subsection{Enunciado del problema}
+Se requiere un programa que modele varias figuras geométricas:
+\begin{itemize}
+    \item \textbf{Círculo:} radio en centímetros.
+    \item \textbf{Rectángulo:} base y altura en centímetros.
+    \item \textbf{Cuadrado:} longitud del lado en centímetros.
+    \item \textbf{Triángulo Rectángulo:} base y altura en centímetros.
+\end{itemize}
+
+Para cada figura se deben definir métodos para calcular su \textbf{área} y su \textbf{perímetro}. Adicionalmente, para el triángulo rectángulo se requiere:
+\begin{itemize}
+    \item Calcular la longitud de la hipotenusa mediante el teorema de Pitágoras ($h = \sqrt{a^2 + b^2}$).
+    \item Determinar el tipo de triángulo según sus lados: equilátero (3 lados iguales), isósceles (2 lados iguales) o escaleno (3 lados diferentes).
+\end{itemize}
+Se debe desarrollar una clase de prueba \texttt{Figuras\_geometricas} con un método \texttt{main} que cree instancias de las cuatro figuras y muestre los cálculos.
+
+\subsection{URL del repositorio en GitHub}
+\noindent \textbf{Enlace:} \url{https://github.com/yguzmanm-sys/POO-2026-2S/blob/main/actividad%202/Actividad2_Ejercicio2_4_Figuras.py}
+
+\subsection{Código fuente en Python}
+\begin{lstlisting}[caption={Implementación de Figuras Geométricas (\texttt{Actividad2\_Ejercicio2\_4\_Figuras.py})}]
+import math
+
+class Circulo:
+    def __init__(self, radio: float):
+        self.radio = radio
+
+    def calcular_area(self) -> float:
+        return math.pi * (self.radio ** 2)
+
+    def calcular_perimetro(self) -> float:
+        return 2 * math.pi * self.radio
+
+class Rectangulo:
+    def __init__(self, base: float, altura: float):
+        self.base = base
+        self.altura = altura
+
+    def calcular_area(self) -> float:
+        return self.base * self.altura
+
+    def calcular_perimetro(self) -> float:
+        return 2 * (self.base + self.altura)
+
+class Cuadrado:
+    def __init__(self, longitud: float):
+        self.longitud = longitud
+
+    def calcular_area(self) -> float:
+        return self.longitud ** 2
+
+    def calcular_perimetro(self) -> float:
+        return 4 * self.longitud
+
+class TrianguloRectangulo:
+    def __init__(self, base: float, altura: float):
+        self.base = base
+        self.altura = altura
+
+    def calcular_area(self) -> float:
+        return (self.base * self.altura) / 2
+
+    def calcular_hipotenusa(self) -> float:
+        return math.sqrt(self.base ** 2 + self.altura ** 2)
+
+    def calcular_perimetro(self) -> float:
+        return self.base + self.altura + self.calcular_hipotenusa()
+
+    def determinar_tipo_triangulo(self) -> str:
+        hipotenusa = self.calcular_hipotenusa()
+        if math.isclose(self.base, self.altura) and math.isclose(self.base, hipotenusa):
+            return "Es un triángulo Equilátero"
+        elif not math.isclose(self.base, self.altura) and not math.isclose(self.base, hipotenusa) and not math.isclose(self.altura, hipotenusa):
+            return "Es un triángulo Escaleno"
+        else:
+            return "Es un triángulo Isósceles"
+
+    # Alias por compatibilidad
+    determinar_tipo_triagunlo = determinar_tipo_triangulo
+
+class Figuras_geometricas:
+    @staticmethod
+    def main():
+        figura1 = Circulo(2.0)
+        figura2 = Rectangulo(1, 2)
+        figura3 = Cuadrado(3)
+        figura4 = TrianguloRectangulo(3, 5)
+
+        print(f"El área del círculo es = {figura1.calcular_area()}")
+        print(f"El perímetro del círculo es = {figura1.calcular_perimetro()}")
+        print(f"El área del rectángulo es = {figura2.calcular_area()}")
+        print(f"El perímetro del rectángulo es = {figura2.calcular_perimetro()}")
+        print(f"El área del cuadrado es = {figura3.calcular_area()}")
+        print(f"El perímetro del cuadrado es = {figura3.calcular_perimetro()}")
+        print(f"El área del triángulo rectángulo es = {figura4.calcular_area()}")
+        print(f"El perímetro del triángulo rectángulo es = {figura4.calcular_perimetro()}")
+        print(figura4.determinar_tipo_triangulo())
+
+if __name__ == "__main__":
+    Figuras_geometricas.main()
+\end{lstlisting}
+
+\subsection{Diagrama de Clases UML}
+El diagrama ilustra las cuatro clases que representan las figuras geométricas independientes y la clase de prueba \texttt{Figuras\_geometricas} con una relación de uso (\textit{dependency/use}) hacia cada figura.
+
+\begin{figure}[H]
+    \centering
+    \resizebox{\textwidth}{!}{%
+    \begin{tikzpicture}
+        \node[uml, text width=3.6cm, anchor=north west] (circ) at (0,0) {\textbf{Circulo}
+        \nodepart{second}\umlm radio: float
+        \nodepart{third}\umlp \_\_init\_\_(radio: float)\\
+        \umlp calcular\_area(): float\\
+        \umlp calcular\_perimetro(): float};
+
+        \node[uml, text width=3.6cm, anchor=north west] (rect) at ([xshift=0.4cm]circ.north east) {\textbf{Rectangulo}
+        \nodepart{second}\umlm base: float\\
+        \umlm altura: float
+        \nodepart{third}\umlp \_\_init\_\_(base: float, altura: float)\\
+        \umlp calcular\_area(): float\\
+        \umlp calcular\_perimetro(): float};
+
+        \node[uml, text width=3.6cm, anchor=north west] (cuad) at ([xshift=0.4cm]rect.north east) {\textbf{Cuadrado}
+        \nodepart{second}\umlm longitud: float
+        \nodepart{third}\umlp \_\_init\_\_(longitud: float)\\
+        \umlp calcular\_area(): float\\
+        \umlp calcular\_perimetro(): float};
+
+        \node[uml, text width=4.4cm, anchor=north west] (tri) at ([xshift=0.4cm]cuad.north east) {\textbf{TrianguloRectangulo}
+        \nodepart{second}\umlm base: float\\
+        \umlm altura: float
+        \nodepart{third}\umlp \_\_init\_\_(base: float, altura: float)\\
+        \umlp calcular\_area(): float\\
+        \umlp calcular\_hipotenusa(): float\\
+        \umlp calcular\_perimetro(): float\\
+        \umlp determinar\_tipo\_triangulo(): str};
+
+        \node[umltwo, text width=5cm, anchor=north] (fig) at ($(rect.south)!0.5!(cuad.south)+(0,-2.5cm)$) {\textbf{Figuras\_geometricas}
+        \nodepart{second}\umlp main(): None \quad \{static\}};
+
+        \draw[dashed, -{Latex[length=2.5mm]}] (fig.north) -- node[near end, left, font=\scriptsize] {usa} (circ.south);
+        \draw[dashed, -{Latex[length=2.5mm]}] (fig.north) -- (rect.south);
+        \draw[dashed, -{Latex[length=2.5mm]}] (fig.north) -- (cuad.south);
+        \draw[dashed, -{Latex[length=2.5mm]}] (fig.north) -- (tri.south);
+    \end{tikzpicture}}
+    \caption{Diagrama de clases para el Ejercicio 2.4 (Figuras Geométricas).}
+    \label{fig:uml_ej2_4}
+\end{figure}
+
+\subsection{Resultado de ejecución}
+\begin{verbatim}
+El área del círculo es = 12.566370614359172
+El perímetro del círculo es = 12.566370614359172
+El área del rectángulo es = 2
+El perímetro del rectángulo es = 6
+El área del cuadrado es = 9
+El perímetro del cuadrado es = 12
+El área del triángulo rectángulo es = 7.5
+El perímetro del triángulo rectángulo es = 13.8309518948453
+Es un triángulo Escaleno
+\end{verbatim}
+
+\newpage
+
+% =========================================================================
+% EJERCICIO 2.5
+% =========================================================================
+\section{Ejercicio 2.5 — Métodos con Parámetros y Paso de Mensajes: Clase CuentaBancaria}
+\textbf{Referencia en libro:} Capítulo 2, página 95 (y resolución en páginas 96--103).
+
+\subsection{Enunciado del problema}
+Se requiere un programa que modele una cuenta bancaria con los siguientes atributos:
+\begin{itemize}
+    \item Nombres del titular (\texttt{str}).
+    \item Apellidos del titular (\texttt{str}).
+    \item Número de cuenta bancaria (\texttt{int}).
+    \item Tipo de cuenta (ahorros o corriente).
+    \item Saldo de la cuenta (\texttt{float}, con valor inicial cero).
+\end{itemize}
+
+Operaciones requeridas en la cuenta bancaria:
+\begin{itemize}
+    \item Constructor que inicialice los atributos del titular y el número de cuenta.
+    \item Método para imprimir los valores de los atributos.
+    \item Método para consultar el saldo.
+    \item Método para \textbf{consignar} un valor mayor que cero actualizando el saldo.
+    \item Método para \textbf{retirar} un valor, validando que sea mayor a cero y no sobrepase el saldo actual.
+    \item Métodos complementarios de interacción entre cuentas: \textbf{comparación} de cuentas y \textbf{transferencia} de fondos entre dos cuentas reutilizando las operaciones de retiro y consignación.
+\end{itemize}
+
+\subsection{URL del repositorio en GitHub}
+\noindent \textbf{Enlace:} \url{https://github.com/yguzmanm-sys/POO-2026-2S/blob/main/actividad%202/Actividad2_Ejercicio2_5_CuentaBancaria.py}
+
+\subsection{Código fuente en Python}
+\begin{lstlisting}[caption={Implementación de la clase CuentaBancaria (\texttt{Actividad2\_Ejercicio2\_5\_CuentaBancaria.py})}]
+class CuentaBancaria:
+    def __init__(self, nombresTitular: str, apellidosTitular: str,
+                 numeroCuenta: int, tipoCuenta: str):
+        self.nombresTitular = nombresTitular
+        self.apellidosTitular = apellidosTitular
+        self.numeroCuenta = numeroCuenta
+        self.tipoCuenta = tipoCuenta
+        self.saldo = 0.0
+
+    def imprimir(self):
+        print("Nombres del titular =", self.nombresTitular)
+        print("Apellidos del titular =", self.apellidosTitular)
+        print("Número de cuenta =", self.numeroCuenta)
+        print("Tipo de cuenta =", self.tipoCuenta)
+        print("Saldo =", self.saldo)
+
+    def consultarSaldo(self):
+        print("El saldo actual es =", self.saldo)
+        return self.saldo
+
+    def consignar(self, valor: float) -> bool:
+        if valor > 0:
+            self.saldo += valor
+            print(f"Se ha consignado ${valor}. Nuevo saldo: ${self.saldo}")
+            return True
+        print("El valor a consignar debe ser mayor que cero.")
+        return False
+
+    def retirar(self, valor: float) -> bool:
+        if 0 < valor <= self.saldo:
+            self.saldo -= valor
+            print(f"Se ha retirado ${valor}. Nuevo saldo: ${self.saldo}")
+            return True
+        print("El valor a retirar debe ser menor o igual al saldo actual y mayor que cero.")
+        return False
+
+    def compararCuenta(self, cuenta: 'CuentaBancaria') -> bool:
+        return (self.numeroCuenta == cuenta.numeroCuenta
+                and self.nombresTitular == cuenta.nombresTitular
+                and self.apellidosTitular == cuenta.apellidosTitular
+                and self.tipoCuenta == cuenta.tipoCuenta)
+
+    def transferencia(self, cuenta: 'CuentaBancaria', valor: float) -> bool:
+        if self.retirar(valor):
+            cuenta.consignar(valor)
+            print(f"Se ha transferido ${valor} de la cuenta {self.numeroCuenta} a {cuenta.numeroCuenta}")
+            return True
+        print("No se pudo realizar la transferencia.")
+        return False
+
+if __name__ == "__main__":
+    cuenta1 = CuentaBancaria("Pedro", "Pérez", 123456, "AHORROS")
+    cuenta2 = CuentaBancaria("Juan", "López", 654321, "CORRIENTE")
+
+    cuenta1.imprimir()
+    cuenta1.consignar(500000)
+    cuenta1.transferencia(cuenta2, 200000)
+    cuenta1.consultarSaldo()
+    cuenta2.consultarSaldo()
+\end{lstlisting}
+
+\subsection{Diagrama de Clases UML}
+El diagrama modela la clase \texttt{CuentaBancaria} junto con el tipo enumerado \texttt{tipoCuenta} (\texttt{AHORROS}, \texttt{CORRIENTE}) y las operaciones de consulta, consignación, retiro y transferencia entre cuentas.
+
+\begin{figure}[H]
+    \centering
+    \resizebox{\textwidth}{!}{%
+    \begin{tikzpicture}
+        \node[uml] (cuenta) {\textbf{CuentaBancaria}
+        \nodepart{second}\umlm nombresTitular: str\\
+        \umlm apellidosTitular: str\\
+        \umlm numeroCuenta: int\\
+        \umlm tipoCuenta: str\\
+        \umlm saldo: float = 0.0
+        \nodepart{third}\umlp \_\_init\_\_(nombresTitular: str, apellidosTitular: str, numeroCuenta: int, tipoCuenta: str)\\
+        \umlp imprimir(): None\\
+        \umlp consultarSaldo(): float\\
+        \umlp consignar(valor: float): bool\\
+        \umlp retirar(valor: float): bool\\
+        \umlp compararCuenta(cuenta: CuentaBancaria): bool\\
+        \umlp transferencia(cuenta: CuentaBancaria, valor: float): bool};
+
+        \node[umltwo, text width=3.2cm, right=1.8cm of cuenta] (tcuenta) {\estereo{enumeration}\\\textbf{tipoCuenta}
+        \nodepart{second}AHORROS\\
+        CORRIENTE};
+
+        \draw[dashed, -{Latex[length=2.5mm]}] (cuenta.east) -- node[above, font=\scriptsize] {valores} (tcuenta.west);
+    \end{tikzpicture}}
+    \caption{Diagrama de clases para el Ejercicio 2.5 (Clase CuentaBancaria).}
+    \label{fig:uml_ej2_5}
+\end{figure}
+
+\subsection{Resultado de ejecución}
+\begin{verbatim}
+Nombres del titular = Pedro
+Apellidos del titular = Pérez
+Número de cuenta = 123456
+Tipo de cuenta = AHORROS
+Saldo = 0.0
+Se ha consignado $500000. Nuevo saldo: $500000.0
+Se ha retirado $200000. Nuevo saldo: $300000.0
+Se ha consignado $200000. Nuevo saldo: $200000.0
+Se ha transferido $200000 de la cuenta 123456 a 654321
+El saldo actual es = 300000.0
+El saldo actual es = 200000.0
+\end{verbatim}
+
+\newpage
+
+% =========================================================================
+% CONCLUSIONES
+% =========================================================================
+\section{Conclusiones}
+\begin{itemize}[leftmargin=*]
+    \item La programación orientada a objetos en Python permite un modelado conceptual intuitivo y flexible mediante clases, constructores y métodos, manteniendo una correspondencia directa con los diagramas estáticos de UML.
+    \item El uso de tipos enumerados (\texttt{Enum}) aporta robustez y claridad al código, limitando el rango de valores permitidos a constantes predefinidas semánticamente coherentes con el dominio del problema.
+    \item Los mecanismos de encapsulamiento mediante métodos de acceso (\textit{getters} y \textit{setters}) permiten controlar la mutabilidad y validar las transiciones de estado de los objetos, evitando inconsistencias como velocidades negativas o desbordamiento de límites operativos.
+    \item El paso de objetos como parámetros entre métodos permite implementar patrones de interacción y delegación de responsabilidades de alta cohesión, como se evidenció en la transferencia de saldos entre cuentas bancarias.
+\end{itemize}
+
+\end{document}
